@@ -42,7 +42,8 @@ defmodule Cache do
   end
 
   def handle_call({:delete, name}, _from, state) do
-    {:reply, Map.delete(state, name), state}
+    updated_state = Map.delete(state, name)
+    {:reply, Map.delete(state, name), updated_state}
   end
 
   def handle_call({:exists, name}, _from, state) do

@@ -30,6 +30,7 @@ defmodule Cache do
   end
 
   def clear(pid) do
+    GenServer.cast(pid, :clear)
   end
 
   def handle_call(:read, _from, state) do
@@ -46,6 +47,10 @@ defmodule Cache do
 
   def handle_call({:exists, name}, _from, state) do
     {:reply, Map.has_key?(state, name), state}
+  end
+
+  def handle_cast(:clear, _state) do
+    {:noreply, Map.new()}
   end
 
   def handle_cast({:write, name, value}, state) do
